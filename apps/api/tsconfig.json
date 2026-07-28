@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "strict": true, // Habilita todas las opciones de comprobación de código
+    "moduleDetection": "force", // Forza la detección de módulos
+    "module": "ESNext", // Especificar el sistema de módulos
+    "target": "ESNext", // Especificar la versión de ECMAScript
+    "allowJs": true, // Permite archivos js
+    "esModuleInterop": true, // Habilita la interoperabilidad de módulos
+    "isolatedModules": true, // Habilita la comprobación de módulos independientes
+  },
+  "include": ["src/**/*"], // Incluir archivos
+  "exclude": ["node_modules", "dist"] // Excluir archivos
+}
