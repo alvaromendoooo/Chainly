@@ -12,6 +12,7 @@ import { ExecutionsService } from './executions/executions.service';
 import { ExecutionsModule } from './executions/executions.module';
 import { ConnectorsController } from './connectors/connectors.controller';
 import { ConnectorsModule } from './connectors/connectors.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -26,4 +27,4 @@ import { ConnectorsModule } from './connectors/connectors.module';
   controllers: [AppController, AuthController, ConnectorsController],
   providers: [AppService, AuthService, ExecutionsService],
 })
-export class AppModule {}
+export class AppModule { constructor(private dataSource: DataSource) {} }
