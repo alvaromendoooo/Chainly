@@ -1,7 +1,8 @@
-import { Connector } from "src/connectors/connectors.entity";
+import { NodeExecution } from "src/executions/executions.entity";
+import { Provider } from "src/providers/providers.entity";
 import { Workflow } from "src/workflows/workflows.entity";
 import { JoinColumn } from "typeorm";
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToOne  } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, OneToMany  } from "typeorm";
 
 @Entity()
 export class Node {
@@ -14,14 +15,20 @@ export class Node {
     @Column({ type: 'timestamptz' })
     updatedAt: Date;
 
-    @Column("simple-json")
-    settings: { config: Array; provider_name: string }
+    @Column()
+    type: string;
 
-    @ManyToMany(() => Workflow)
-    workflows: Workflow[];
+    @Column({ type: "simple-json" })
+    settings: Record<string, unknown>;
 
-    @OneToOne(() => Connector)
+    @ManyToOne(() => Workflow, (workflow) => workflow.nodes)
+    workflow: Workflow;
+
+    @OneToOne(() => Provider)
     @JoinColumn()
-    connector: Connector;
+    provider: Provider;
+
+    @OneToMany(() => NodeExecution, (nodeExecution) => nodeExecution.nodeId)
+    nodeExecutions: NodeExecution[];
 
 }

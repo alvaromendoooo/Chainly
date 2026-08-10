@@ -1,6 +1,15 @@
+import { Execution } from "src/executions/executions.entity";
 import { Node } from "src/nodes/node.entity";
 import { User } from "src/users/users.entity";
-import { Entity, Column, PrimaryGeneratedColumn, Generated, ManyToOne, ManyToMany, JoinTable  } from "typeorm";
+import { 
+    Entity, 
+    Column, 
+    PrimaryGeneratedColumn, 
+    Generated, 
+    ManyToOne, 
+    JoinTable,
+    OneToMany  
+} from "typeorm";
 
 @Entity()
 export class Workflow {
@@ -24,8 +33,11 @@ export class Workflow {
     @ManyToOne(()=> User, (user) => user.workflows)
     user: User; 
 
-    @ManyToMany(() => Node)
+    @OneToMany(() => Node, (node) => node.workflow)
     @JoinTable()
     nodes: Node[];
+
+    @OneToMany(() => Execution, (execution) => execution.workflow)
+    executions: Execution[];
     
 }

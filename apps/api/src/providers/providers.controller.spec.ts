@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConnectorsController } from './connectors.controller';
+import { ConnectorsController } from './providers.controller';
 
 describe('ConnectorsController', () => {
   let controller: ConnectorsController;

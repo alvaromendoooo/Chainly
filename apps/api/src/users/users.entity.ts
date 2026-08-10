@@ -1,7 +1,15 @@
+import { Provider } from "src/providers/providers.entity";
 import { EncryptionTransformerConfig } from "src/utils/encryption.config";
 import { Workflow } from "src/workflows/workflows.entity";
-import { Entity, Column, PrimaryGeneratedColumn, Generated, OneToMany  } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne  } from "typeorm";
 import { EncryptionTransformer } from "typeorm-encrypted";
+
+export enum UserConnectionState {
+    ACTIVE = 'active',
+    EXPIRED = 'expried',
+    REVOKED = 'revoked',
+    ERROR = 'error'
+}
 
 @Entity()
 export class User {
@@ -18,21 +26,48 @@ export class User {
     @Column()
     lastName: string;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
-    @Column({ nullable: false, transformer: new EncryptionTransformer(EncryptionTransformerConfig)})
-    password: string;
-
-    @Column({ transformer: new EncryptionTransformer(EncryptionTransformerConfig)})
-    accessToken: string;
+    @Column()
+    passwordHash: string;
 
     @OneToMany(() => Workflow, (workflow) => workflow.user)
     workflows: Workflow[];
 
-    @Column({ type: 'timestamptz'})
-    signedUp: Date;
+    @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
 
     @Column({ type: 'timestamptz'})
-    signedIn: Date;
+    lastLoginAt: Date;
+
+    @OneToMany(() => UserConnection, (connection) => connection.userId)
+    userConnections: UserConnection[];
+}
+
+@Entity()
+export class UserConnection {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @ManyToOne(() => User, (user) => user.userConnections)
+    userId: User;
+
+    @ManyToOne(() => Provider, (provider) => provider.userConnections)
+    providerId: Provider;
+
+    @Column()
+    name: string
+
+    @Column("simple-json", { transformer: new EncryptionTransformer(EncryptionTransformerConfig)} )
+    credentials: Record<string, unknown>;
+
+    @Column({ type: "enum", enum: UserConnectionState })
+    state: UserConnectionState;
+
+    @Column({ type: 'timestamptz' })
+    createdAt: Date;
+
+    @Column({ type: 'timestamptz' })
+    updatedAt: Date;
 }
