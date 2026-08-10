@@ -1,24 +1,52 @@
 {
-  "name": "web",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.2.12",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.12",
-    "typescript": "^5"
-  }
+	"name": "web",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"test:e2e": "playwright install && playwright test",
+		"test": "npm run test:e2e",
+		"format": "prettier --write .",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build"
+	},
+	"devDependencies": {
+		"@chromatic-com/storybook": "latest",
+		"@eslint/js": "^10.0.1",
+		"@inlang/paraglide-js": "^2.18.2",
+		"@playwright/test": "^1.60.0",
+		"@storybook/addon-a11y": "^10.5.7",
+		"@storybook/addon-docs": "^10.5.7",
+		"@storybook/addon-svelte-csf": "latest",
+		"@storybook/addon-vitest": "^10.5.7",
+		"@storybook/sveltekit": "^10.5.7",
+		"@sveltejs/adapter-auto": "^7.0.1",
+		"@sveltejs/kit": "^2.63.0",
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"@types/node": "^22",
+		"@vitest/browser-playwright": "latest",
+		"@vitest/coverage-v8": "latest",
+		"eslint": "^10.4.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-storybook": "^10.5.7",
+		"eslint-plugin-svelte": "^3.19.0",
+		"globals": "^17.6.0",
+		"playwright": "latest",
+		"prettier": "^3.8.3",
+		"prettier-plugin-svelte": "^4.1.0",
+		"storybook": "^10.5.7",
+		"svelte": "^5.56.1",
+		"svelte-check": "^4.6.0",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.60.1",
+		"vite": "^8.0.16",
+		"vitest": "latest"
+	}
 }
