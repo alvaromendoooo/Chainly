@@ -1,6 +1,6 @@
 import { Execution } from "src/executions/executions.entity";
 import { Node } from "src/nodes/node.entity";
-import { User } from "src/users/users.entity";
+import { User } from "src/users/domain/users.entity";
 import { 
     Entity, 
     Column, 

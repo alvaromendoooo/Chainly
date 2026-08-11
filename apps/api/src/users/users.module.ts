@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+import { UsersService } from './application/users.service';
+import { UsersController } from './presentation/users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users.entity';
+import { User } from './domain/users.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])], // Registra los repositorios asociados a este dominio
