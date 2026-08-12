@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Execution, NodeExecution } from "src/executions/executions.entity";
 import { Node } from "src/nodes/node.entity";
 import { Provider } from "src/providers/providers.entity";
-import { User, UserConnection } from "src/users/domain/users.entity";
+import { User, UserConnection } from "src/users/infrastructure/users.entity";
 import { Workflow } from "src/workflows/workflows.entity";
 
 @Module({

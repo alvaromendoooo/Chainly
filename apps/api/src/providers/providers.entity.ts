@@ -1,5 +1,5 @@
 import { Node } from "src/nodes/node.entity";
-import { User, UserConnection } from "src/users/domain/users.entity";
+import { User, UserConnection } from "src/users/infrastructure/users.entity";
 import { Generated } from "typeorm";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany  } from "typeorm";
 
@@ -10,7 +10,7 @@ export enum ProviderConnectionState {
     REVOKED = "revoked"
 } 
 
-@Entity()
+@Entity('provider')
 export class Provider {
     @PrimaryGeneratedColumn()
     id: number;

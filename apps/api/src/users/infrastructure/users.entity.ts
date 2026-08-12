@@ -11,8 +11,8 @@ export enum UserConnectionState {
     ERROR = 'error'
 }
 
-@Entity()
-export class User {
+@Entity('user')
+export class UserEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -45,7 +45,7 @@ export class User {
     userConnections: UserConnection[];
 }
 
-@Entity()
+@Entity('user_connection')
 export class UserConnection {
     @PrimaryGeneratedColumn()
     id: number

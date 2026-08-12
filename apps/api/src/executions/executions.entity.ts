@@ -12,7 +12,7 @@ export enum ExecutionStatus {
     CANCELLED = "cancelled"
 }
 
-@Entity()
+@Entity('execution')
 export class Execution {
     @PrimaryGeneratedColumn()
     id: number;
@@ -33,7 +33,7 @@ export class Execution {
     nodeExecutions: NodeExecution[];
 }
 
-@Entity()
+@Entity('node_execution')
 export class NodeExecution {
     @PrimaryGeneratedColumn()
     id: number;

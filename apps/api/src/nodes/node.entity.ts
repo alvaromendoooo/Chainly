@@ -4,7 +4,7 @@ import { Workflow } from "src/workflows/workflows.entity";
 import { JoinColumn } from "typeorm";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, OneToMany  } from "typeorm";
 
-@Entity()
+@Entity('node')
 export class Node {
     @PrimaryGeneratedColumn()
     id: number;

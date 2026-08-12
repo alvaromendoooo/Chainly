@@ -1,6 +1,6 @@
 import { Execution } from "src/executions/executions.entity";
 import { Node } from "src/nodes/node.entity";
-import { User } from "src/users/domain/users.entity";
+import { UserEntity } from "src/users/infrastructure/users.entity";
 import { 
     Entity, 
     Column, 
@@ -11,7 +11,7 @@ import {
     OneToMany  
 } from "typeorm";
 
-@Entity()
+@Entity('workflow')
 export class Workflow {
     @PrimaryGeneratedColumn()
     id: number;
@@ -30,8 +30,8 @@ export class Workflow {
     @Column({ default: true })
     isActive: boolean;
 
-    @ManyToOne(()=> User, (user) => user.workflows)
-    user: User; 
+    @ManyToOne(()=> UserEntity, (user) => user.workflows)
+    user: UserEntity; 
 
     @OneToMany(() => Node, (node) => node.workflow)
     @JoinTable()
