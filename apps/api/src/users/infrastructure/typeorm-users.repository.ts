@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { UserEntity } from "./users.entity";
 import { User } from "../domain/users";
-import { IUserRepository } from "./users.repository.interface";
+import { IUserRepository } from "../domain/users.repository.interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -55,15 +55,15 @@ export class TypeORMUserRepository implements IUserRepository {
     }
 
     async delete(id: number): Promise<void> {
-        const userEntity = await this.repository.find({ // Find all DB entities that match with id from params
+        const userEntity = await this.repository.findOne({ // Find the DB entity that matches the id from params
             where: { id }
         });
 
-        if(!userEntity) { // If it don't find entities, we make an error to inform that nothing will be deleted
-            throw new Error("Can't delete a non existant entity"); 
+        if (!userEntity) { // If it doesn't find the entity, throw an error to inform that nothing will be deleted
+            throw new Error("Can't delete a non existant entity");
         }
 
-        this.repository.delete(userEntity); // Delete entity from DB
+        await this.repository.delete(id); // Delete entity from DB by id
     }
 
     private toDomain(entity: UserEntity): User {

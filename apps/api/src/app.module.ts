@@ -4,7 +4,7 @@ import { AppService } from './app.service.js';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './db/database.module.js';
 import { UsersModule } from './users/users.module';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth/application/auth.service.js';
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller.js';
 import { WorkflowsModule } from './workflows/workflows.module';

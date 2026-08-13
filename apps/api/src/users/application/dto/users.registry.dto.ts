@@ -8,40 +8,57 @@ import {
     Max, 
     IsOptional
 } from 'class-validator';
+import { User } from 'src/users/domain/users';
 import { integer } from 'yaml-language-server';
+import { Exclude, Expose, plainToInstance } from 'class-transformer';
 
 export class UserRegistryDTO {
     
     @IsNotEmpty()
     @IsString()
-    name: string;
+    firstName!: string;
 
     @IsNotEmpty()
     @IsString()
-    surname: string;
+    lastName!: string;
 
     @IsNotEmpty()
     @IsString()
     @IsEmail() 
-    email: string;
+    email!: string;
 
     @IsNotEmpty()
     @IsString()
-    username: string;
+    username!: string;
 
 
     @IsNotEmpty()
     @IsString()
     @IsStrongPassword()
-    password: string;
+    password!: string;
 
     @IsNotEmpty()
     @IsInt()
     @Min(18)
     @Max(100)
-    age: integer;
+    age!: integer;
 
     @IsOptional()
     @IsString()
     location?: string;
+}
+
+export class UserResponseDTO {
+    @Expose() id!: string;
+    @Expose() firstName!: string;
+    @Expose() lastName!: string;
+    @Expose() email!: string;
+    @Expose() createdAt!: Date;
+
+    @Exclude() passwordHash!: string;
+
+    // Mapper of UserResponseDTO attributes with User domain attributes
+    static fromEntity(user: User): UserResponseDTO {
+        return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: true });
+    }
 }
