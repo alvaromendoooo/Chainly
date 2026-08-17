@@ -50,8 +50,8 @@ export class UserConnection {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => User, (user) => user.userConnections)
-    userId: User;
+    @ManyToOne(() => UserEntity, (user) => user.userConnections)
+    userId: UserEntity;
 
     @ManyToOne(() => Provider, (provider) => provider.userConnections)
     providerId: Provider;

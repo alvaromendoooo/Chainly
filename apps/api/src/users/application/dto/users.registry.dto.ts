@@ -57,8 +57,13 @@ export class UserResponseDTO {
 
     @Exclude() passwordHash!: string;
 
-    // Mapper of UserResponseDTO attributes with User domain attributes
-    static fromEntity(user: User): UserResponseDTO {
+    // Mapper of UserResponseDTO attributes with User domain attributes - excludes password for security
+    static fromEntityFiltered(user: User): UserResponseDTO {
         return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: true });
+    }
+
+    // Mapper of UserResponseDTO attributes with User domain attributes - includes password
+    static fromEntityRaw(user: User): UserResponseDTO {
+        return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: false });
     }
 }

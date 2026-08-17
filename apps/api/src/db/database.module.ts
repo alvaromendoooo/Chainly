@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Execution, NodeExecution } from "src/executions/executions.entity";
 import { Node } from "src/nodes/node.entity";
 import { Provider } from "src/providers/providers.entity";
-import { User, UserConnection } from "src/users/infrastructure/users.entity";
+import { UserEntity, UserConnection } from "src/users/infrastructure/users.entity";
 import { Workflow } from "src/workflows/workflows.entity";
 
 @Module({
@@ -20,7 +20,7 @@ import { Workflow } from "src/workflows/workflows.entity";
                 password: configService.get<string>('DB_PASS'),
                 database: configService.get<string>('DB_NAME'),
                 entities: [
-                    User,
+                    UserEntity,
                     Workflow,
                     Execution,
                     NodeExecution,

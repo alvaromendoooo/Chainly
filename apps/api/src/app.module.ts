@@ -41,14 +41,6 @@ import { WorkflowsService } from './workflows/workflows.service.js';
     ExecutionsController,
     NodesController,
   ],
-  providers: [
-    AppService, 
-    AuthService, 
-    ExecutionsService,
-    ProvidersService,
-    UsersService,
-    NodesService,
-    WorkflowsService
-  ],
+  providers: [ AppService ],
 })
 export class AppModule { constructor(private dataSource: DataSource) {} }

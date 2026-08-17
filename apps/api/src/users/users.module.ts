@@ -16,6 +16,7 @@ import { USER_REPOSITORY } from './domain/users.repository.interface';
       useClass: TypeORMUserRepository // Having different ORM repositories, we need to specify which one will we provide for its execution
     },
   ],
-  controllers: [UsersController]
+  controllers: [UsersController],
+  exports: [UsersService],
 })
 export class UsersModule {}

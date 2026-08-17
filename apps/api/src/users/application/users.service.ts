@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { USER_REPOSITORY, type IUserRepository } from '../domain/users.repository.interface';
 import { UserRegistryDTO, UserResponseDTO } from './dto/users.registry.dto';
 import { User } from '../domain/users';
@@ -47,9 +47,20 @@ export class UsersService {
 
         const userSaved = await this.userRepository.save(newRegistry);
 
-        if(!userSaved) throw new InternalServerErrorException("Something went wrong trying to register user into the server");
+        if(!userSaved) {
+            throw new InternalServerErrorException("Something went wrong trying to register user into the server");
+        }
+        return UserResponseDTO.fromEntityFiltered(userSaved); // I want to show some data from User instance, not all - security aspect
+    }
 
-        return UserResponseDTO.fromEntity(userSaved); // I want to show some data from User instance, not all - security aspect
+    // Given field name and its value, returns matched user or throws an error
+    async findUser(field: string, value: string): Promise<any> {
+        const user = await this.userRepository.findByAllowedField(field, value);
+
+        if(!user) {
+            throw new NotFoundException("Something went wrong trying to find an user using this field: " + field + " and this value: " + value);
+        }
+        return UserResponseDTO.fromEntityRaw(user);
     }
 
     private async hashPasswords(password: string): Promise<string> {
