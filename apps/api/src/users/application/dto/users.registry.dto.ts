@@ -9,7 +9,6 @@ import {
     IsOptional
 } from 'class-validator';
 import { User } from 'src/users/domain/users';
-import { integer } from 'yaml-language-server';
 import { Exclude, Expose, plainToInstance } from 'class-transformer';
 
 export class UserRegistryDTO {
@@ -41,11 +40,24 @@ export class UserRegistryDTO {
     @IsInt()
     @Min(18)
     @Max(100)
-    age!: integer;
+    age!: number;
 
     @IsOptional()
     @IsString()
     location?: string;
+}
+
+export class UserLoginDTO {
+
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    email!: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @IsStrongPassword()
+    password!: string;
 }
 
 export class UserResponseDTO {
@@ -55,15 +67,15 @@ export class UserResponseDTO {
     @Expose() email!: string;
     @Expose() createdAt!: Date;
 
-    @Exclude() passwordHash!: string;
+    @Expose({ groups: ['internal'] }) password!: string; // Creation of a group to differenciate where it should be exposed and where not
 
     // Mapper of UserResponseDTO attributes with User domain attributes - excludes password for security
     static fromEntityFiltered(user: User): UserResponseDTO {
-        return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: true });
+        return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: true }); // No group included, passwordHash excluded
     }
 
     // Mapper of UserResponseDTO attributes with User domain attributes - includes password
     static fromEntityRaw(user: User): UserResponseDTO {
-        return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: false });
+        return plainToInstance(UserResponseDTO, user, { excludeExtraneousValues: true, groups: ['internal'], }); // Now the group is included so passwordHash is exposed
     }
 }
